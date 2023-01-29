@@ -9,13 +9,42 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView {
+            GenericModelView(person: TestPerson(id: UUID(), firstName: "Bryan", lastName: "Anderson"))
+                .tabItem {
+                    Text("Generic")
+                }
+            
+            ViewThatUsesTemplate(model: CoreDataModel(profileImage: UIImage(named: "profileimage"), firstName: "Bryan", lastName: "Anderson"))
+                .tabItem {
+                    Text("Template")
+                }
+
+
+            
+            ViewBuilderView(photosView: {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color(uiColor: .systemFill))
+                    .frame(height: 140)
+            }, tagsView: {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color(uiColor: .systemFill))
+                    .frame(width: 80, height: 80)
+
+            }, peopleView: {
+                Circle()
+                    .fill(Color(uiColor: .systemFill))
+                    .frame(width: 80)
+            }, doneAction: {
+                //called when it runs
+            })
+                .tabItem {
+                    Text("ViewBuilder")
+                }
+            
+
         }
-        .padding()
+    
     }
 }
 
